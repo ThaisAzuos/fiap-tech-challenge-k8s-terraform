@@ -1,15 +1,29 @@
-output "cluster_endpoint" {
-  value = module.eks.cluster_endpoint
+output "vpc_id" {
+  description = "The ID of the VPC created."
+  value       = module.vpc.vpc_id
 }
 
-output "cluster_arn" {
-  value = module.eks.cluster_arn
+output "public_subnet_ids" {
+  description = "A list of public subnet IDs created."
+  value       = module.vpc.public_subnet_ids
 }
 
-output "kubeconfig" {
-  value = module.eks.kubeconfig
+output "private_subnet_ids" {
+  description = "A list of private subnet IDs created."
+  value       = module.vpc.private_subnet_ids
 }
 
-output "node_group_id" {
-  value = module.eks.node_group_id
+output "eks_cluster_name" {
+  description = "The name of the EKS cluster."
+  value       = module.eks_cluster.cluster_name
+}
+
+output "eks_cluster_endpoint" {
+  description = "The endpoint for the EKS cluster."
+  value       = module.eks_cluster.cluster_endpoint
+}
+
+output "eks_cluster_certificate_authority_data" {
+  description = "The base64 encoded certificate data required to communicate with your cluster."
+  value       = module.eks_cluster.cluster_certificate_authority_data
 }
