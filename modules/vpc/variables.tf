@@ -1,7 +1,19 @@
-variable "vpc_cidr" {
-  default = "10.0.0.0/16"
+variable "environment" {
+  description = "The environment name (e.g., dev, prod)."
+  type        = string
 }
 
-variable "public_subnet_cidr" {
-  default = "10.0.1.0/24"
+variable "vpc_cidr_block" {
+  description = "The CIDR block for the VPC."
+  type        = string
+}
+
+variable "public_subnet_cidrs" {
+  description = "A list of CIDR blocks for the public subnets."
+  type        = list(string)
+}
+
+variable "private_subnet_cidrs" {
+  description = "A list of CIDR blocks for the private subnets."
+  type        = list(string)
 }
