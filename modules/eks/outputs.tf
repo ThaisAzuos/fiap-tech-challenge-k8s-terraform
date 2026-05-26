@@ -1,19 +1,19 @@
 output "cluster_endpoint" {
-  value = aws_eks_cluster.oficina.endpoint
+  description = "The endpoint for the EKS cluster."
+  value       = aws_eks_cluster.oficina.endpoint
 }
 
-output "cluster_arn" {
-  value = aws_eks_cluster.oficina.arn
+output "cluster_certificate_authority_data" {
+  description = "The base64 encoded certificate data required to communicate with your cluster."
+  value       = aws_eks_cluster.oficina.certificate_authority[0].data
 }
 
-output "kubeconfig" {
-  value = {
-    cluster_name       = aws_eks_cluster.oficina.name
-    endpoint           = aws_eks_cluster.oficina.endpoint
-    certificate_authority_data = aws_eks_cluster.oficina.certificate_authority[0].data
-  }
+output "cluster_name" {
+  description = "The name of the EKS cluster."
+  value       = aws_eks_cluster.oficina.name
 }
 
-output "node_group_id" {
-  value = aws_eks_node_group.workers.id
+output "node_group_name" {
+  description = "The name of the EKS node group."
+  value       = aws_eks_node_group.workers.node_group_name
 }
