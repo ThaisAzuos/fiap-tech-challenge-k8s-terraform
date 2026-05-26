@@ -1,8 +1,8 @@
 module "vpc" {
   source = "./modules/vpc"
 
-  environment        = var.environment
-  vpc_cidr_block     = var.vpc_cidr_block
+  environment          = var.environment
+  vpc_cidr_block       = var.vpc_cidr_block
   public_subnet_cidrs  = var.public_subnet_cidrs
   private_subnet_cidrs = var.private_subnet_cidrs
 }
@@ -22,4 +22,21 @@ module "eks_cluster" {
   node_max_size        = var.node_max_size
   newrelic_license_key = var.newrelic_license_key
   kubernetes_namespace = var.kubernetes_namespace
+}
+
+module "hpa" {
+  source = "./modules/hpa"
+
+  environment               = var.environment
+  cluster_endpoint          = module.eks_cluster.cluster_endpoint
+  cluster_ca_data           = module.eks_cluster.cluster_certificate_authority_data
+  cluster_name              = module.eks_cluster.cluster_name
+  deployment_name           = "oficina-app"
+  namespace                 = var.kubernetes_namespace
+  min_replicas              = 2
+  max_replicas              = 10
+  cpu_utilization_target    = 70
+  memory_utilization_target = 80
+
+  depends_on = [module.eks_cluster]
 }
