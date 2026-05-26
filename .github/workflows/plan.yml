@@ -1,18 +1,35 @@
 name: Plan Terraform
 
 on:
-  push:
-    branches: [develop]
+  pull_request:
+    branches: [main]
+
+env:
+  AWS_REGION: us-east-1
 
 jobs:
   plan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.0
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config="bucket=${{ secrets.TF_STATE_BUCKET }}" -backend-config="key=k8s/prod/terraform.tfstate" -backend-config="region=${{ env.AWS_REGION }}"
+
       - name: Terraform Plan
-        run: terraform plan -var-file=envs/dev.tfvars
+        run: |
+          terraform plan \
+            -var-file=envs/prod.tfvars \
+            -var "newrelic_license_key=${{ secrets.NEW_RELIC_LICENSE_KEY }}"

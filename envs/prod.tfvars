@@ -1,5 +1,8 @@
-aws_region = "us-east-1"
-environment = "prod"
-cluster_name = "oficina-eks-prod"
-node_instance_type = "t3.medium"
-desired_nodes = 2
+aws_region           = "us-east-1"
+environment          = "prod"
+cluster_name         = "oficina-eks-prod"
+node_instance_type   = "t3.medium"
+node_desired_size    = 2
+node_min_size        = 2
+node_max_size        = 5
+kubernetes_namespace = "default"
