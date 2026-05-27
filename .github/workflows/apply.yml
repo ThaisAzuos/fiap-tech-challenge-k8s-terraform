@@ -38,6 +38,9 @@ jobs:
       - name: Terraform Init
         run: terraform init -backend-config="bucket=${{ secrets.TF_STATE_BUCKET }}" -backend-config="key=k8s/${{ github.event.inputs.environment }}/terraform.tfstate" -backend-config="region=${{ env.AWS_REGION }}"
 
+      - name: Limpar estado obsoleto do HPA
+        run: terraform state rm module.hpa.kubernetes_horizontal_pod_autoscaler_v2.app || true
+
       - name: Terraform Plan
         run: |
           terraform plan \
