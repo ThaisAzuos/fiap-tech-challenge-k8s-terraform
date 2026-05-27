@@ -38,5 +38,4 @@ module "hpa" {
   cpu_utilization_target    = 70
   memory_utilization_target = 80
 
-  depends_on = [module.eks_cluster]
 }
