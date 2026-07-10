@@ -1,5 +1,7 @@
 # fiap-tech-challenge-k8s-terraform
 
+> **Fase 4 (Tech Challenge):** este repositório passa a provisionar a infraestrutura de cluster compartilhada pelos 3 microsserviços de negócio (namespaces, RabbitMQ e MongoDB via Helm), além do EKS/VPC já existentes. Veja a visão geral em `docs/arquitetura/fase4-visao-geral.md` no repositório `fiap-tech-challenge-app` e a decisão em [`docs/ADRs/ADR-001-namespaces-rabbitmq-mongodb.md`](docs/ADRs/ADR-001-namespaces-rabbitmq-mongodb.md).
+
 ## Propósito
 
 Infraestrutura como código (IaC) para provisionar o cluster Kubernetes na AWS usando Terraform. Este repositório cria toda a base de rede e computação necessária para rodar a aplicação de oficina mecânica no Amazon EKS.
