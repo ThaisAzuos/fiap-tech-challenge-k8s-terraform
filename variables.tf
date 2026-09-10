@@ -79,3 +79,10 @@ variable "kubernetes_namespace" {
   type        = string
   default     = "default"
 }
+
+# --- Fase 4: mensageria ---
+variable "rabbitmq_admin_password" {
+  description = "Admin password for the shared RabbitMQ instance (Fase 4). Supply via TF_VAR_rabbitmq_admin_password or CI secret — never commit a value in .tfvars."
+  type        = string
+  sensitive   = true
+}

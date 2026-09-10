@@ -39,3 +39,16 @@ module "hpa" {
   memory_utilization_target = 80
 
 }
+
+# --- Fase 4: namespaces por microsserviço + RabbitMQ compartilhado ---
+# Ver docs/ADRs/ADR-001-namespaces-rabbitmq-mongodb.md e ADR-002-implementacao-messaging.md
+module "messaging" {
+  source = "./modules/messaging"
+
+  environment             = var.environment
+  cluster_endpoint        = module.eks_cluster.cluster_endpoint
+  cluster_ca_data         = module.eks_cluster.cluster_certificate_authority_data
+  cluster_name            = module.eks_cluster.cluster_name
+  service_namespaces      = ["os-service", "billing-service", "execution-service"]
+  rabbitmq_admin_password = var.rabbitmq_admin_password
+}
